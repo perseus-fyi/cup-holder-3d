@@ -27,6 +27,8 @@ html, body {
 #app {
   display: flex;
   height: 100vh;
+  /* dvh — чтобы низ панели не прятался за адресной строкой мобильного Safari */
+  height: 100dvh;
   width: 100vw;
 }
 
@@ -212,3 +214,32 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .inline { display: flex; align-items: center; gap: 8px; }
 .inline > * { margin: 0; }
 hr.sep { border: none; border-top: 1px solid var(--line); margin: 12px 0; }
+
+/* ---- мобильная раскладка: 3D сверху, панель снизу ---- */
+@media (max-width: 768px) {
+  #app { flex-direction: column; }
+  #viewport {
+    order: -1;
+    flex: none;
+    height: 44vh;
+    height: 44dvh;
+    min-height: 220px;
+  }
+  #sidebar {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    flex: 1;
+    border-right: none;
+    border-top: 1px solid var(--line);
+  }
+  #brand { padding: 10px 14px 8px; }
+  #brand h1 { font-size: 16px; }
+  #brand p { display: none; }
+  #controls { padding: 8px 12px calc(28px + env(safe-area-inset-bottom)); }
+  /* 16px — иначе iOS Safari приближает страницу при фокусе на поле ввода */
+  input[type="text"], input[type="number"], select, textarea { font-size: 16px; }
+  input[type="range"] { height: 30px; }
+  button { padding: 10px 12px; }
+  #overlay-top { top: 8px; left: 8px; right: 8px; flex-wrap: wrap; }
+}
